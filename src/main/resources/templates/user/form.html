@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments :: head('Добавление пользователя')"></head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <div th:include="fragments :: navbarTop"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <div th:include="fragments :: navbarLeft"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Добавление пользователя</h4>
+                                <form method="post" th:object="${user}" enctype="multipart/form-data" th:action="${user != null ? '/user/edit' : '/user/add' }" class="forms-sample">
+                                    <input th:if="${user != null}" type="hidden" name="id" th:value="${user.getId()}">
+
+                                    <div class="form-group">
+                                        <label for="username">Логин: </label>
+                                        <input type="text" name="username" class="form-control" id="username" placeholder="Логин" required
+                                            th:value="${user != null ? user.getUsername() : ''}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="password">Пароль: </label>
+                                        <input type="password" name="password" class="form-control" id="password" placeholder="Пароль">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="lastName">Фамилия: </label>
+                                        <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Фамилия"
+                                               th:value="${user != null ? user.getLastName() : ''}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="firstName">Имя: </label>
+                                        <input type="text" name="firstName" class="form-control" id="firstName" placeholder="Имя"
+                                               th:value="${user != null ? user.getFirstName() : ''}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="patronymic">Отчество: </label>
+                                        <input type="text" name="patronymic" class="form-control" id="patronymic" placeholder="Отчество"
+                                               th:value="${user != null ? user.getPatronymic() : ''}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="patronymic">Номер телефона: </label>
+                                        <input type="text" name="phoneNumber" class="form-control" id="phoneNumber" placeholder="Номер телефона"
+                                               th:value="${user != null ? user.getPhoneNumber() : ''}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email">Почта: </label>
+                                        <input type="email" name="email" class="form-control" id="email" placeholder="Почта"
+                                               th:value="${user != null ? user.getEmail() : ''}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Выберите роль пользователя в системе: </label>
+                                        <select multiple="multiple" name="userRoles" class="js-example-basic-single w-100 select2-hidden-accessible" tabindex="-1" aria-hidden="true" required>
+                                            <option th:each="role : ${userRoles}"
+                                                    th:text="${role.getDescription()}"
+                                                    th:value="${role.getId()}"
+                                                    th:selected="${user != null && user.getUserRoles() != null ? user.getUserRoles().contains(role) : false}"
+                                            ></option>
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
+                                    <button class="btn btn-light">Отмена</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <div th:include="fragments :: footer"></div>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- Plugin js for this page -->
+<script th:src="@{/adminStyles/vendors/typeahead.js/typeahead.bundle.min.js}"></script>
+<script th:src="@{/adminStyles/vendors/select2/select2.min.js}"></script>
+<!-- inject:js -->
+<script th:src="@{/adminStyles/js/off-canvas.js}"></script>
+<script th:src="@{/adminStyles/js/hoverable-collapse.js}"></script>
+<script th:src="@{/adminStyles/js/template.js}"></script>
+<script th:src="@{/adminStyles/js/settings.js}"></script>
+<script th:src="@{/adminStyles/js/todolist.js}"></script>
+<!-- endinject -->
+<script th:src="@{/adminStyles/js/file-upload.js}"></script>
+<script th:src="@{/adminStyles/js/typeahead.js}"></script>
+<script th:src="@{/adminStyles/js/select2.js}"></script>
+<script type="application/javascript">
+    $('#bodyRu').summernote();
+    $('#bodyKg').summernote();
+    $('#bodyEn').summernote();
+</script>
+<!-- End custom js for this page-->
+</body>
+
+</html>
+

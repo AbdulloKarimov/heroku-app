@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments :: head('Форма редактирования')"></head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <div th:include="fragments :: navbarTop"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <div th:include="fragments :: navbarLeft"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Компетентный орган (отправитель)</h4>
+                                <form method="post" th:object="${competentOrganOtpravitel}" enctype="multipart/form-data" th:action="${competentOrganOtpravitel != null ? '/competentOrganOtpravitel/edit' : '/competentOrganOtpravitel/add' }" class="forms-sample">
+                                    <input th:if="${competentOrganOtpravitel != null}" type="hidden" name="id" th:value="${competentOrganOtpravitel.getId()}">
+
+                                    <div class="form-group">
+                                        <label for="country">Страна: </label>
+                                        <select name="country" id="country" class="form-control js-example-basic-single">
+                                            <option th:each="country : ${countries}"
+                                                    th:value="${country.getId()}"
+                                                    th:text="${country.getName()}"
+                                                    th:selected="${competentOrganOtpravitel != null && competentOrganOtpravitel.getCountry().getId() == country.getId()}"></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="code">Код: </label>
+                                        <input type="text" name="code" class="form-control" id="code" placeholder="Код"
+                                               th:value="${competentOrganOtpravitel != null ? competentOrganOtpravitel.getCode() : ''}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="code">Код территориального подразделения: </label>
+                                        <input type="text" name="codeTerrPodrazdel" class="form-control" id="codeTerrPodrazdel" placeholder="Код территориального подразделения"
+                                               th:value="${competentOrganOtpravitel != null ? competentOrganOtpravitel.getCodeTerrPodrazdel() : ''}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="code">Адрес: </label>
+                                        <input type="text" name="address" class="form-control" id="address" placeholder="Адрес"
+                                               th:value="${competentOrganOtpravitel != null ? competentOrganOtpravitel.getAddress() : ''}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="code">Телефон: </label>
+                                        <input type="tel" name="phone" class="form-control" id="phone" placeholder="Телефон"
+                                               th:value="${competentOrganOtpravitel != null ? competentOrganOtpravitel.getPhone() : ''}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="code">Fax: </label>
+                                        <input type="text" name="fax" class="form-control" id="fax" placeholder="Fax"
+                                               th:value="${competentOrganOtpravitel != null ? competentOrganOtpravitel.getFax() : ''}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="code">Email: </label>
+                                        <input type="email" name="email" class="form-control" id="email" placeholder="Email"
+                                               th:value="${competentOrganOtpravitel != null ? competentOrganOtpravitel.getEmail() : ''}">
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
+                                    <button class="btn btn-light">Отмена</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <div th:include="fragments :: footer"></div>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- Plugin js for this page -->
+<script th:src="@{/adminStyles/vendors/typeahead.js/typeahead.bundle.min.js}"></script>
+<script th:src="@{/adminStyles/vendors/select2/select2.min.js}"></script>
+<!-- inject:js -->
+<script th:src="@{/adminStyles/js/off-canvas.js}"></script>
+<script th:src="@{/adminStyles/js/hoverable-collapse.js}"></script>
+<script th:src="@{/adminStyles/js/template.js}"></script>
+<script th:src="@{/adminStyles/js/settings.js}"></script>
+<script th:src="@{/adminStyles/js/todolist.js}"></script>
+<!-- endinject -->
+<script th:src="@{/adminStyles/js/file-upload.js}"></script>
+<script th:src="@{/adminStyles/js/typeahead.js}"></script>
+<script th:src="@{/adminStyles/js/select2.js}"></script>
+<!-- End custom js for this page-->
+</body>
+
+</html>
+

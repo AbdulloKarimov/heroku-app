@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments :: head('Форма редактирования')"></head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <div th:include="fragments :: navbarTop"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <div th:include="fragments :: navbarLeft"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Добавление типа пенсии</h4>
+                                <form method="post" th:object="${typePensiya}" enctype="multipart/form-data" th:action="${typePensiya != null ? '/typePensiya/edit' : '/typePensiya/add' }" class="forms-sample">
+                                    <input th:if="${typePensiya != null}" type="hidden" name="id" th:value="${typePensiya.getId()}">
+
+                                    <div class="form-group">
+                                        <label for="name">Название: </label>
+                                        <input type="text" name="name" class="form-control" id="name" placeholder="Название" required
+                                            th:value="${typePensiya != null ? typePensiya.getName() : ''}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="code">Код: </label>
+                                        <input type="text" name="code" class="form-control" id="code" placeholder="Код"
+                                               th:value="${typePensiya != null ? typePensiya.getCode() : ''}">
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
+                                    <button class="btn btn-light">Отмена</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <div th:include="fragments :: footer"></div>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- Plugin js for this page -->
+<script th:src="@{/adminStyles/vendors/typeahead.js/typeahead.bundle.min.js}"></script>
+<script th:src="@{/adminStyles/vendors/select2/select2.min.js}"></script>
+<!-- inject:js -->
+<script th:src="@{/adminStyles/js/off-canvas.js}"></script>
+<script th:src="@{/adminStyles/js/hoverable-collapse.js}"></script>
+<script th:src="@{/adminStyles/js/template.js}"></script>
+<script th:src="@{/adminStyles/js/settings.js}"></script>
+<script th:src="@{/adminStyles/js/todolist.js}"></script>
+<!-- endinject -->
+<script th:src="@{/adminStyles/js/file-upload.js}"></script>
+<script th:src="@{/adminStyles/js/typeahead.js}"></script>
+<script th:src="@{/adminStyles/js/select2.js}"></script>
+<!-- End custom js for this page-->
+</body>
+
+</html>
+

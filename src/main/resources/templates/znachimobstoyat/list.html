@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments :: head('Главная страница админ панели')"></head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <div th:include="fragments :: navbarTop"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <div th:include="fragments :: navbarLeft"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="card-title">Значимые обстоятельства</p>
+                                    </div>
+                                    <div class="col-6 text-right mb-3">
+                                        <a href="/znachimobstoyat/add" class="btn btn-primary align-self-end">Добавить</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="table-responsive">
+                                            <table id="users" class="display expandable-table" style="width:100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>Название</th>
+                                                    <th>Код</th>
+                                                    <th>Действия</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="znachimobstoyat : ${znachimobstoyats}">
+                                                    <td th:text="${znachimobstoyat.getName()}"></td>
+                                                    <td th:text="${znachimobstoyat.getCode()}"></td>
+                                                    <td>
+                                                        <a th:href="${'/znachimobstoyat/' + znachimobstoyat.getId()}" class="btn btn-sm btn-primary">Изменить</a>
+                                                        <a th:href="${'/znachimobstoyat/delete/' + znachimobstoyat.getId()}" class="btn btn-sm btn-danger">Удалить</a>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <div th:include="fragments :: footer"></div>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+
+<script th:src="@{/adminStyles/vendors/datatables.net/jquery.dataTables.js}"></script>
+<script th:src="@{/adminStyles/vendors/datatables.net-bs4/dataTables.bootstrap4.js}"></script>
+<script th:src="@{/adminStyles/js/dataTables.select.min.js}"></script>
+
+<script th:src="@{/adminStyles/js/customDataTablesSettings.js}" type="application/javascript"></script>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        $('#users').DataTable();
+    } );
+</script>
+
+</body>
+
+</html>
+

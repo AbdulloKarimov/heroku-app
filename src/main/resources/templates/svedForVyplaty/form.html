@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments :: head('Форма редактирования стран')"></head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <div th:include="fragments :: navbarTop"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <div th:include="fragments :: navbarLeft"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Добавление сведений для установления и выплаты пенсии</h4>
+                                <form method="post" enctype="multipart/form-data"
+                                      th:action="${'/svedForVyplaty/add' }"
+                                      class="forms-sample">
+<!--                                    <input th:if="${country != null}" type="hidden" name="id"-->
+<!--                                           th:value="${country.getId()}">-->
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Компетентный орган (отправитель)</label>
+                                                <select name="competentOrganOtpravitel" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="competentOrganOtpravitel : ${competentOrganOtpravitels}"
+                                                            th:value="${competentOrganOtpravitel.getId()}" th:text="${competentOrganOtpravitel.getCode() + '-'+competentOrganOtpravitel.getCodeTerrPodrazdel()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Компетентный орган (получатель)</label>
+                                                <select name="competentOrganPoluchatel" id="" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="competentOrganPoluchatel : ${competentOrganPoluchatels}"
+                                                            th:value="${competentOrganPoluchatel.getId()}" th:text="${competentOrganPoluchatel.getCode() + '-'+competentOrganPoluchatel.getCodeTerrPodrazdel()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Дата обращения</label>
+                                                <input type="date" name="dateObrasheniya" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Причина обращения</label>
+                                                <select name="prichinaObrasheniya" id="prichinaObrasheniya" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="prichinaObrasheniya : ${prichinaObrasheniyas}"
+                                                            th:value="${prichinaObrasheniya.getId()}" th:text="${prichinaObrasheniya.getName()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Признак заявителя</label>
+                                                <div class="form-check">
+                                                    <label class="form-check-label"><input type="radio" name="priznakZayaviyelya" class="form-check-input"  id="priznakZayaviyelyaTrue"
+                                                                                           th:value="${true}">Заявитель является участником пенсионного обеспечения</label>
+
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label"><input type="radio" name="priznakZayaviyelya" class="form-check-input"  id="priznakZayaviyelyaFalse"
+                                                                                           th:value="${false}">Заявитель является представителем участника пенсионного обеспечения</label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Сведения об участнике пенсионного обеспечения</label>
+                                                <input type="text" name="svedObUchastnike" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Код вида участника</label>
+                                                <select name="typeUchastnik" id="typeUchastnik" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${typeUchastniks}"
+                                                            th:value="${item.getId()}" th:text="${item.getName()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>ФИО</label>
+                                                <input type="text" name="personalData.fio" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Фамилия при рождении</label>
+                                                <input type="text" name="personalData.fioPriRojdenii" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Гражданство</label>
+                                                <select name="personalData.grajdanstvo" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${countries}"
+                                                            th:value="${item.getId()}" th:text="${item.getName()+'-'+item.getCodeISO()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Дата рождения</label>
+                                                <input type="date" name="personalData.birthDate" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Место рождения</label>
+                                                <input type="text" name="personalData.placeOfBirth" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3>Адрес местожительства</h3>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Код страны</label>
+                                                <select name="personalData.countryOfLive" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${countries}"
+                                                            th:value="${item.getId()}" th:text="${item.getName()+'-'+item.getCodeISO()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Почтовый индекс</label>
+                                                <input type="text" name="personalData.postIndex" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Область</label>
+                                                <select name="personalData.oblastLive" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${oblasts}"
+                                                            th:value="${item.getId()}" th:text="${item.getName()+'-'+item.getCode()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Район</label>
+                                                <select name="personalData.rayonLive" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${rayons}"
+                                                            th:value="${item.getId()}" th:text="${item.getName()+'-'+item.getCode()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Нас.пункт</label>
+                                                <select name="personalData.nasPunkt" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${placeNames}"
+                                                            th:value="${item.getId()}" th:text="${item.getName()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Улица</label>
+                                                <input type="text" name="personalData.street" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Номер дома</label>
+                                                <input type="text" name="personalData.houseNumber" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Корпус</label>
+                                                <input type="text" name="personalData.korpus" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Номер квартиры</label>
+                                                <input type="text" name="personalData.appartmentNumber" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3>Контактные реквизиты</h3>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Номер телефона</label>
+                                                <input type="text" name="personalData.phoneNumber" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>E-Mail</label>
+                                                <input type="text" name="personalData.email" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Код пола</label>
+                                                <select name="personalData.sex" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${sexs}"
+                                                            th:value="${item}" th:text="${item}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3>Удостоверение личности</h3>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Код страны</label>
+                                                <select name="personalData.personalDocument.country" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${countries}"
+                                                            th:value="${item.getId()}" th:text="${item.getName()+'-'+item.getCodeISO()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Код вида документа</label>
+                                                <select name="personalData.personalDocument.typeDocument" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${typeDocuments}"
+                                                            th:value="${item.getId()}" th:text="${item.getName()+'-'+item.getCode()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Серия</label>
+                                                <input type="text" name="personalData.personalDocument.serie" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Номер документа</label>
+                                                <input type="text" name="personalData.personalDocument.numberDocument" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Орган выдавший документ</label>
+                                                <input type="text" name="personalData.personalDocument.organVydavshiyDocument" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Дата выдачи</label>
+                                                <input type="date" name="personalData.personalDocument.dateVydachiDocument" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Дата окончания</label>
+                                                <input type="date" name="personalData.personalDocument.dateOkonchaniyaDocument" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3>Индивидуальный номер</h3>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Код страны</label>
+                                                <select name="personalData.country" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${countries}"
+                                                            th:value="${item.getId()}" th:text="${item.getName()+'-'+item.getCodeISO()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Идентификационный номер</label>
+                                                <input type="text" name="personalData.identityNumber" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3>Подтверждающий документ</h3>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Код страны</label>
+                                                <select name="personalData.personalAcceptDocument.country" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${countries}"
+                                                            th:value="${item.getId()}" th:text="${item.getName()+'-'+item.getCodeISO()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Кодовое обозначение документа или его наименование</label>
+                                                <select name="personalData.personalAcceptDocument.typeDocument" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${typeDocuments}"
+                                                            th:value="${item.getId()}" th:text="${item.getName()+'-'+item.getCode()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Серия</label>
+                                                <input type="text" name="personalData.personalAcceptDocument.serie" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Номер документа</label>
+                                                <input type="text" name="personalData.personalAcceptDocument.numberDocument" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Орган выдавший документ</label>
+                                                <input type="text" name="personalData.personalAcceptDocument.organVydavshiyDocument" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Дата выдачи</label>
+                                                <input type="date" name="personalData.personalAcceptDocument.dateVydachiDocument" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Заполняется если виду участника "член семьи" и т.д. -->
+
+                                    <div id="svedOPredstavitel" hidden>
+                                        <div class="row">
+                                            <h3>Сведения о представителе участника пенсионного обеспечения</h3>
+                                            <div class="col-6" id="stepenRodstva" hidden>
+                                                <div class="form-group">
+                                                    <label>Степень родства</label>
+                                                    <select name="typeRodstva"
+                                                            class="form-control form-control-sm js-example-basic-single">
+                                                        <option th:each="item : ${typeRodstvas}"
+                                                                th:value="${item.getId()}"
+                                                                th:text="${item.getName()+'-'+item.getCode()}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label>ФИО</label>
+                                                    <input type="text" name="predstavitelData.fio" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h3>Удостоверение личности</h3>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Код страны</label>
+                                                    <select name="predstavitelData.personalDocument.country"
+                                                            class="form-control form-control-sm js-example-basic-single">
+                                                        <option th:each="item : ${countries}"
+                                                                th:value="${item.getId()}"
+                                                                th:text="${item.getName()+'-'+item.getCodeISO()}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Код вида документа</label>
+                                                    <select name="predstavitelData.personalDocument.typeDocument"
+                                                            class="form-control form-control-sm js-example-basic-single">
+                                                        <option th:each="item : ${typeDocuments}"
+                                                                th:value="${item.getId()}"
+                                                                th:text="${item.getName()+'-'+item.getCode()}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Серия</label>
+                                                    <input type="text" name="predstavitelData.personalDocument.serie"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Номер документа</label>
+                                                    <input type="text"
+                                                           name="predstavitelData.personalDocument.numberDocument"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Орган выдавший документ</label>
+                                                    <input type="text"
+                                                           name="predstavitelData.personalDocument.organVydavshiyDocument"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Дата выдачи</label>
+                                                    <input type="date"
+                                                           name="predstavitelData.personalDocument.dateVydachiDocument"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Дата окончания действия документа</label>
+                                                    <input type="date"
+                                                           name="predstavitelData.personalDocument.dateOkonchaniyaDocument"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h3>Адрес местожительства</h3>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Код страны</label>
+                                                    <select name="predstavitelData.countryOfLive"
+                                                            class="form-control form-control-sm js-example-basic-single">
+                                                        <option th:each="item : ${countries}"
+                                                                th:value="${item.getId()}"
+                                                                th:text="${item.getName()+'-'+item.getCodeISO()}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Почтовый индекс</label>
+                                                    <input type="text" name="predstavitelData.postIndex"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Область</label>
+                                                    <select name="predstavitelData.oblastLive"
+                                                            class="form-control form-control-sm js-example-basic-single">
+                                                        <option th:each="item : ${oblasts}"
+                                                                th:value="${item.getId()}"
+                                                                th:text="${item.getName()+'-'+item.getCode()}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Район</label>
+                                                    <select name="predstavitelData.rayonLive"
+                                                            class="form-control form-control-sm js-example-basic-single">
+                                                        <option th:each="item : ${rayons}"
+                                                                th:value="${item.getId()}"
+                                                                th:text="${item.getName()+'-'+item.getCode()}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Нас.пункт</label>
+                                                    <select name="predstavitelData.nasPunkt"
+                                                            class="form-control form-control-sm js-example-basic-single">
+                                                        <option th:each="item : ${placeNames}"
+                                                                th:value="${item.getId()}"
+                                                                th:text="${item.getName()}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Улица</label>
+                                                    <input type="text" name="predstavitelData.street"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Номер дома</label>
+                                                    <input type="text" name="predstavitelData.houseNumber"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Корпус</label>
+                                                    <input type="text" name="predstavitelData.korpus"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Номер квартиры</label>
+                                                    <input type="text" name="predstavitelData.appartmentNumber"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h3>Контактные реквизиты</h3>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label>Номер телефона</label>
+                                                    <input type="text" name="predstavitelData.phoneNumber"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label>E-Mail</label>
+                                                    <input type="text" name="predstavitelData.email"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h3>Документ, подтверждающий полномочия представителя участника пенсионного
+                                            обеспечения</h3>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Код страны</label>
+                                                    <select name="predstavitelData.polnomochiyaDocument.country"
+                                                            class="form-control form-control-sm js-example-basic-single">
+                                                        <option th:each="item : ${countries}"
+                                                                th:value="${item.getId()}"
+                                                                th:text="${item.getName()+'-'+item.getCodeISO()}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Код вида документа</label>
+                                                    <select name="predstavitelData.polnomochiyaDocument.typeDocument"
+                                                            class="form-control form-control-sm js-example-basic-single">
+                                                        <option th:each="item : ${typeDocuments}"
+                                                                th:value="${item.getId()}"
+                                                                th:text="${item.getName()+'-'+item.getCode()}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Серия</label>
+                                                    <input type="text"
+                                                           name="predstavitelData.polnomochiyaDocument.serie"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Номер документа</label>
+                                                    <input type="text"
+                                                           name="predstavitelData.polnomochiyaDocument.numberDocument"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Орган выдавший документ</label>
+                                                    <input type="text"
+                                                           name="predstavitelData.polnomochiyaDocument.organVydavshiyDocument"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Дата выдачи</label>
+                                                    <input type="date"
+                                                           name="predstavitelData.polnomochiyaDocument.dateVydachiDocument"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Срок действия полномочий представителя</label>
+                                                    <input type="date"
+                                                           name="predstavitelData.polnomochiyaDocument.srokDeystviyPredstavitelya"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Вид пенсии</label>
+                                                <select name="typePensiya" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${typePensiya}"
+                                                            th:value="${item.getId()}" th:text="${item.getName()+'-'+item.getCode()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Признак получения трудящимся (членом семьи) пенсии из другого ведомства или государства</label>
+                                                <div class="form-check">
+                                                    <label class="form-check-label"><input type="radio" name="poluchalPensiyu" class="form-check-input" id="poluchalPensiyuTrue"
+                                                                                           th:value="${true}">Получал</label>
+
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label"><input type="radio" name="poluchalPensiyu" class="form-check-input" id="poluchalPensiyuFalse"
+                                                                                           th:value="${false}">Не получал</label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="svedONaznachPensii" hidden>
+                                    <h3>Сведения о назначенной пенсии из другого ведомства или государства</h3>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Код страны</label>
+                                                <select name="codeCountryForOtherVedomstva" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${countries}"
+                                                            th:value="${item.getId()}" th:text="${item.getName()+'-'+item.getCodeISO()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Код территориального органа (ведомства) (при наличии)</label>
+                                                <input type="text" name="codeTerrOrgan" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Кодовое обозначение вида пенсии</label>
+                                                <select name="typePensiyaForOtherVedomstva" class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${typePensiya}"
+                                                            th:value="${item.getId()}" th:text="${item.getName()+'-'+item.getCode()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Дата начала получения пенсии</label>
+                                                <input type="date" name="dateStartTakingPensiya" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Дата окончания получения пенсии</label>
+                                                <input type="date" name="dateEndTakingPensiya" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div id="stajRabotyDiv" hidden>
+                                        <h3>Сведения о стаже работы трудящегося</h3>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Код государства трудоуйстройства</label>
+                                                    <select name="staj.country"
+                                                            class="form-control form-control-sm js-example-basic-single">
+                                                        <option th:each="item : ${countries}"
+                                                                th:value="${item.getId()}"
+                                                                th:text="${item.getName()+'-'+item.getCodeISO()}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Кодовое обозначение или наименование вида
+                                                        деятельности</label>
+                                                    <input type="text" name="staj.vidDeyatelnosti" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Тип периода</label>
+                                                    <input type="text" name="staj.typePeriod" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Дата начала периода</label>
+                                                    <input type="date" name="staj.dateStartPeriod" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Дата окончания периода</label>
+                                                    <input type="date" name="staj.dateEndPeriod" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Наименование организации</label>
+                                                    <input type="text" name="staj.organisation" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Адрес местонахождения организации</label>
+                                                    <input type="text" name="staj.organisationAddress"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="infoAboutDeathDiv" hidden>
+                                        <h3>Информация об умершем</h3>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Наименование документа</label>
+                                                    <input type="text" name="personalData.nameDocumentDeath"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Серия</label>
+                                                    <input type="text" name="personalData.serieAndNumberDocumentDeath"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Номер документа</label>
+                                                    <input type="text" name="personalData.organVydavshiyDeath"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Орган выдавший документ</label>
+                                                    <input type="text" name="personalData.organVydavshiyDeath"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Дата выдачи документа</label>
+                                                    <input type="date" name="personalData.dateVydachiDeath"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Дата смерти</label>
+                                                    <input type="date" name="personalData.dateDeath"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Место смерти</label>
+                                                    <input type="text" name="personalData.placeOfDeath"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <div class="form-group">
+                                                <label>Дополнительные сведения о члене семьи трудящегося</label>
+                                                <textarea name="infoAboutFamily" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Количество иждивенцев</label>
+                                                <input type="text" name="countOfIjdivenec" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h3>Сведения о расторгнутом браке умершего трудящегося</h3>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Наименование документа о расторжении брака</label>
+                                                <input type="text" name="documentBrakOld.nameDocumentRastorjenie" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Серия</label>
+                                                <input type="text" name="documentBrakOld.serie" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Номер документа</label>
+                                                <input type="text" name="documentBrakOld.number" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Кем выдан</label>
+                                                <input type="text" name="documentBrakOld.kemVydan" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Дата выдачи документа</label>
+                                                <input type="date" name="documentBrakOld.dateVydachi" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <input name="documentBrakOld.isOld" th:value="${true}" type="hidden">
+                                    </div>
+
+                                    <h3>Сведения о вступлении в новый брак</h3>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Наименование документа о расторжении брака</label>
+                                                <input type="text" name="documentBrakNew.nameDocumentRastorjenie" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Серия</label>
+                                                <input type="text" name="documentBrakNew.serie" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Номер документа</label>
+                                                <input type="text" name="documentBrakNew.number" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Кем выдан</label>
+                                                <input type="text" name="documentBrakNew.kemVydan" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Дата выдачи документа</label>
+                                                <input type="date" name="documentBrakNew.dateVydachi" class="form-control">
+                                            </div>
+                                            <input name="documentBrakNew.isOld" th:value="${false}" type="hidden">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <label>Доставка пенсии в государство, в адрес которого направляются сведения</label>
+                                            <input type="checkbox" class="form-check-input" id="dostavka">
+                                        </div>
+                                    </div>
+                                    <div id="bankRekvizity" hidden>
+                                        <h3>Банковские реквизиты участника пенсионного обеспечения</h3>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Код вида государства получения пенсии</label>
+                                                    <select name="bankingRekvisits.country"
+                                                            class="form-control form-control-sm js-example-basic-single">
+                                                        <option th:each="item : ${countries}"
+                                                                th:value="${item.getId()}"
+                                                                th:text="${item.getName()+'-'+item.getCodeISO()}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>ФИО</label>
+                                                    <input type="text" name="bankingRekvisits.fio" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Номер банковского счета</label>
+                                                    <input type="text" name="bankingRekvisits.rekvisitNumber"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Наименование банка</label>
+                                                    <input type="text" name="bankingRekvisits.bankName"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Наименование филиала</label>
+                                                    <input type="text" name="bankingRekvisits.filialName"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>БИК (Банковский идентификационный код)</label>
+                                                    <input type="text" name="bankingRekvisits.bikNumber"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>БИН (Бизнес идентификационный номер)</label>
+                                                    <input type="text" name="bankingRekvisits.binNumber"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Номер расчетного счета</label>
+                                                    <input type="text" name="bankingRekvisits.numberRasschet"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Корреспондентский счет</label>
+                                                    <input type="text" name="bankingRekvisits.correspondentSchet"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Иная информация</label>
+                                                <textarea class="form-control" name="otherInfo" cols="30" rows="10"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Дополнительная информация</label>
+                                                <textarea class="form-control" name="dopInfo" cols="30" rows="10"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3>Прилагаемый документ</h3>
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Наименование документа</label>
+                                                <input type="text" name="namePrilDocument" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Кодовое обозначение документа</label>
+                                                <input type="text" name="codePrilDocument" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Кол-во листов документа</label>
+                                                <input type="text" name="countOfPapersPrilDocument" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Документ в бинарном формате</label>
+                                                <textarea class="form-control" name="documentBinaryFormat" cols="30" rows="10"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
+                                    <button class="btn btn-light">Отмена</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <div th:include="fragments :: footer"></div>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- Plugin js for this page -->
+<script th:src="@{/adminStyles/vendors/typeahead.js/typeahead.bundle.min.js}"></script>
+<script th:src="@{/adminStyles/vendors/select2/select2.min.js}"></script>
+<!-- inject:js -->
+<script th:src="@{/adminStyles/js/off-canvas.js}"></script>
+<script th:src="@{/adminStyles/js/hoverable-collapse.js}"></script>
+<script th:src="@{/adminStyles/js/template.js}"></script>
+<script th:src="@{/adminStyles/js/settings.js}"></script>
+<script th:src="@{/adminStyles/js/todolist.js}"></script>
+<!-- endinject -->
+<script th:src="@{/adminStyles/js/file-upload.js}"></script>
+<script th:src="@{/adminStyles/js/typeahead.js}"></script>
+<script th:src="@{/adminStyles/js/select2.js}"></script>
+<script type="application/javascript">
+    $("#typeUchastnik").on('change', function (){
+        let typeUchastnikText = $("#typeUchastnik option:selected").text()
+        if (typeUchastnikText === 'член семьи' || typeUchastnikText === 'наследник (правопреемник) пенсионных накоплении'
+            || typeUchastnikText === 'лицо, претендующее на получение пенсии, не полученной трудящимся (членом семьи) в связи со смертью') {
+
+            $('#stepenRodstva').removeAttr('hidden')
+            $('#infoAboutDeathDiv').removeAttr('hidden')
+
+        } else {
+            $('#stepenRodstva').attr('hidden', true)
+            $('#infoAboutDeathDiv').attr('hidden', true)
+        }
+    })
+    $("#priznakZayaviyelyaFalse").on('change', function (){
+        $('#svedOPredstavitel').removeAttr('hidden')
+    })
+    $("#priznakZayaviyelyaTrue").on('change', function (){
+        $('#svedOPredstavitel').attr('hidden', true)
+    })
+
+    $("#poluchalPensiyuTrue").on('change', function (){
+        $('#svedONaznachPensii').removeAttr('hidden')
+    })
+    $("#poluchalPensiyuFalse").on('change', function (){
+        $('#svedONaznachPensii').attr('hidden', true)
+    })
+    $("#dostavka").on('change', function (){
+        if ($("#dostavka").is(':checked')){
+            $('#bankRekvizity').removeAttr('hidden')
+        } else {
+            $('#bankRekvizity').attr('hidden', true)
+        }
+
+    })
+    $("#prichinaObrasheniya").on('change', function (){
+        let typeUchastnikText = $("#prichinaObrasheniya option:selected").text()
+        if (typeUchastnikText === 'назначение и выплата пенсии' || typeUchastnikText === 'перерасчет размера назначенной пенсии') {
+
+            $('#stajRabotyDiv').removeAttr('hidden')
+
+        } else {
+            $('#stajRabotyDiv').attr('hidden', true)
+        }
+    })
+</script>
+
+<!-- End custom js for this page-->
+</body>
+
+</html>
+

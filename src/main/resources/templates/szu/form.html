@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments :: head('Форма редактирования стран')"></head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <div th:include="fragments :: navbarTop"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <div th:include="fragments :: navbarLeft"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Добавление сведений о завершении удержания</h4>
+                                <form method="post" enctype="multipart/form-data"
+                                      th:action="${'/szu/add' }"
+                                      class="forms-sample">
+                                    <!--                                    <input th:if="${country != null}" type="hidden" name="id"-->
+                                    <!--                                           th:value="${country.getId()}">-->
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Компетентный орган (отправитель)</label>
+                                                <select name="competentOrganOtpravitel"
+                                                        class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="competentOrganOtpravitel : ${competentOrganOtpravitels}"
+                                                            th:value="${competentOrganOtpravitel.getId()}"
+                                                            th:text="${competentOrganOtpravitel.getCode() + '-'+competentOrganOtpravitel.getCodeTerrPodrazdel()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Компетентный орган (получатель)</label>
+                                                <select name="competentOrganPoluchatel" id=""
+                                                        class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="competentOrganPoluchatel : ${competentOrganPoluchatels}"
+                                                            th:value="${competentOrganPoluchatel.getId()}"
+                                                            th:text="${competentOrganPoluchatel.getCode() + '-'+competentOrganPoluchatel.getCodeTerrPodrazdel()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <label>Сведения об участнике пенсионного обеспечения</label>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Код вида участника</label>
+                                                <select name="typeUchastnik" id="typeUchastnik"
+                                                        class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${typeUchastniks}"
+                                                            th:value="${item.getId()}"
+                                                            th:text="${item.getName()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>ФИО</label>
+                                                <input type="text" name="personalData.fio" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Фамилия при рождении</label>
+                                                <input type="text" name="personalData.fioPriRojdenii"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Гражданство</label>
+                                                <select name="personalData.grajdanstvo"
+                                                        class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${countries}"
+                                                            th:value="${item.getId()}"
+                                                            th:text="${item.getName()+'-'+item.getCodeISO()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Дата рождения</label>
+                                                <input type="date" name="personalData.birthDate" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Место рождения</label>
+                                                <input type="text" name="personalData.placeOfBirth"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3>Адрес местожительства</h3>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Код страны</label>
+                                                <select name="personalData.countryOfLive"
+                                                        class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${countries}"
+                                                            th:value="${item.getId()}"
+                                                            th:text="${item.getName()+'-'+item.getCodeISO()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Почтовый индекс</label>
+                                                <input type="text" name="personalData.postIndex" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Область</label>
+                                                <select name="personalData.oblastLive"
+                                                        class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${oblasts}"
+                                                            th:value="${item.getId()}"
+                                                            th:text="${item.getName()+'-'+item.getCode()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Район</label>
+                                                <select name="personalData.rayonLive"
+                                                        class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${rayons}"
+                                                            th:value="${item.getId()}"
+                                                            th:text="${item.getName()+'-'+item.getCode()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Нас.пункт</label>
+                                                <select name="personalData.nasPunkt"
+                                                        class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${placeNames}"
+                                                            th:value="${item.getId()}"
+                                                            th:text="${item.getName()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Улица</label>
+                                                <input type="text" name="personalData.street" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Номер дома</label>
+                                                <input type="text" name="personalData.houseNumber" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Корпус</label>
+                                                <input type="text" name="personalData.korpus" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Номер квартиры</label>
+                                                <input type="text" name="personalData.appartmentNumber"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3>Контактные реквизиты</h3>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Номер телефона</label>
+                                                <input type="text" name="personalData.phoneNumber" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>E-Mail</label>
+                                                <input type="text" name="personalData.email" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Код пола</label>
+                                                <select name="personalData.sex"
+                                                        class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${sexs}"
+                                                            th:value="${item}" th:text="${item}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3>Индивидуальный номер</h3>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Код страны</label>
+                                                <select name="personalData.country"
+                                                        class="form-control form-control-sm js-example-basic-single">
+                                                    <option th:each="item : ${countries}"
+                                                            th:value="${item.getId()}"
+                                                            th:text="${item.getName()+'-'+item.getCodeISO()}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Идентификационный номер</label>
+                                                <input type="text" name="personalData.identityNumber"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h3>Сведения о завершении удержания</h3>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Дата решения об удержании излишне выплаченной суммы пенсии</label>
+                                                    <input name="svedOZaversheniUderjaniya.dateResheniya" type="date" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Номер решения </label>
+                                                    <input name="svedOZaversheniUderjaniya.numberResheniya" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Удержанная сумма пенсии</label>
+                                                    <input name="svedOZaversheniUderjaniya.uderjannayaSumma" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Код валюты</label>
+                                                    <select name="svedOZaversheniUderjaniya.valuta"
+                                                            class="form-control form-control-sm js-example-basic-single">
+                                                        <option th:each="item : ${currencies}"
+                                                                th:value="${item.getId()}"
+                                                                th:text="${item.getName()+'-'+item.getCode()}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Признак объема удержанной пенсии</label>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label"><input type="radio"
+                                                                                               name="svedOZaversheniUderjaniya.uderjanPensiya"
+                                                                                               class="form-check-input"
+                                                                                               id="uderjanPensiyaTrue"
+                                                                                               th:value="${true}">удержана в полном объеме</label>
+
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label"><input type="radio"
+                                                                                               name="svedOZaversheniUderjaniya.uderjanPensiya"
+                                                                                               class="form-check-input"
+                                                                                               id="uderjanPensiyaFalse"
+                                                                                               th:value="${false}">удержана не в полном объеме</label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" id="uderjaniyaPensii" hidden>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Остаток суммы пенсии, подлежащей удержанию</label>
+                                                    <input name="svedOZaversheniUderjaniya.ostatok" class="form-control" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Код валюты</label>
+                                                    <select name="svedOZaversheniUderjaniya.codeValuta"
+                                                            class="form-control form-control-sm js-example-basic-single">
+                                                        <option th:each="item : ${currencies}"
+                                                                th:value="${item.getId()}"
+                                                                th:text="${item.getName()+'-'+item.getCode()}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Причина прекращения удержания</label>
+                                                    <input name="svedOZaversheniUderjaniya.prichinaPrekrasheniya" class="form-control" type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h3>Дополнительная информация</h3>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Дополнительная информация</label>
+                                                <textarea class="form-control" name="dopInfo" cols="30" rows="10"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3>Прилагаемый документ</h3>
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Наименование документа</label>
+                                                <input type="text" name="namePrilDocument" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Кодовое обозначение документа</label>
+                                                <input type="text" name="codePrilDocument" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Кол-во листов документа</label>
+                                                <input type="text" name="countOfPapersPrilDocument"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Документ в бинарном формате</label>
+                                                <textarea class="form-control" name="documentBinaryFormat" cols="30"
+                                                          rows="10"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
+                                    <button class="btn btn-light">Отмена</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <div th:include="fragments :: footer"></div>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- Plugin js for this page -->
+<script th:src="@{/adminStyles/vendors/typeahead.js/typeahead.bundle.min.js}"></script>
+<script th:src="@{/adminStyles/vendors/select2/select2.min.js}"></script>
+<!-- inject:js -->
+<script th:src="@{/adminStyles/js/off-canvas.js}"></script>
+<script th:src="@{/adminStyles/js/hoverable-collapse.js}"></script>
+<script th:src="@{/adminStyles/js/template.js}"></script>
+<script th:src="@{/adminStyles/js/settings.js}"></script>
+<script th:src="@{/adminStyles/js/todolist.js}"></script>
+<!-- endinject -->
+<script th:src="@{/adminStyles/js/file-upload.js}"></script>
+<script th:src="@{/adminStyles/js/typeahead.js}"></script>
+<script th:src="@{/adminStyles/js/select2.js}"></script>
+<script type="application/javascript">
+    $("#typeUchastnik").on('change', function () {
+        let typeUchastnikText = $("#typeUchastnik option:selected").text()
+        if (typeUchastnikText === 'член семьи' || typeUchastnikText === 'наследник (правопреемник) пенсионных накоплении'
+            || typeUchastnikText === 'лицо, претендующее на получение пенсии, не полученной трудящимся (членом семьи) в связи со смертью') {
+
+            $('#stepenRodstva').removeAttr('hidden')
+            $('#infoAboutDeathDiv').removeAttr('hidden')
+
+        } else {
+            $('#stepenRodstva').attr('hidden', true)
+            $('#infoAboutDeathDiv').attr('hidden', true)
+        }
+    })
+    $("#priznakZayaviyelyaFalse").on('change', function () {
+        $('#svedOPredstavitel').removeAttr('hidden')
+    })
+    $("#priznakZayaviyelyaTrue").on('change', function () {
+        $('#svedOPredstavitel').attr('hidden', true)
+    })
+    $("#rabotaetTrue").on('change', function () {
+        $('#rabotaetDiv').removeAttr('hidden')
+    })
+    $("#rabotaetFalse").on('change', function () {
+        $('#rabotaetDiv').attr('hidden', true)
+    })
+
+    $("#poluchalPensiyuTrue").on('change', function () {
+        $('#svedONaznachPensii').removeAttr('hidden')
+    })
+    $("#poluchalPensiyuFalse").on('change', function () {
+        $('#svedONaznachPensii').attr('hidden', true)
+    })
+    $("#uderjanPensiyaFalse").on('change', function () {
+        $('#uderjaniyaPensii').removeAttr('hidden')
+    })
+    $("#uderjanPensiyaTrue").on('change', function () {
+        $('#uderjaniyaPensii').attr('hidden', true)
+    })
+    $("#dostavka").on('change', function () {
+        if ($("#dostavka").is(':checked')) {
+            $('#bankRekvizity').removeAttr('hidden')
+        } else {
+            $('#bankRekvizity').attr('hidden', true)
+        }
+
+    })
+    $("#prichinaObrasheniya").on('change', function () {
+        let typeUchastnikText = $("#prichinaObrasheniya option:selected").text()
+        if (typeUchastnikText === 'назначение и выплата пенсии' || typeUchastnikText === 'перерасчет размера назначенной пенсии') {
+
+            $('#stajRabotyDiv').removeAttr('hidden')
+
+        } else {
+            $('#stajRabotyDiv').attr('hidden', true)
+        }
+    })
+</script>
+
+<!-- End custom js for this page-->
+</body>
+
+</html>
+

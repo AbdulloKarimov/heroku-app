@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments :: head('Добавление населенного пункта')"></head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <div th:include="fragments :: navbarTop"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <div th:include="fragments :: navbarLeft"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Добавление населенного пункта</h4>
+                                <form method="post" th:object="${placename}" th:action="${placename != null ? '/naspunkt/edit' : '/naspunkt/add' }" class="forms-sample">
+                                    <input th:if="${placename != null}" type="hidden" name="id" th:value="${placename.getId()}">
+
+                                    <div class="form-group">
+                                        <label>Выберите тип населенного пункта: </label>
+                                        <select name="placeType" class="js-example-basic-single w-100 select2-hidden-accessible" tabindex="-1" aria-hidden="true" required>
+                                            <option th:each="placeType : ${placeTypes}"
+                                                    th:text="${placeType.getName()}"
+                                                    th:value="${placeType.getId()}"
+                                                    th:selected="${placename != null && placename.getPlaceType() != null ? placename.getPlaceType().getId()==placeType.getId() : null}"
+                                            ></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="name">Наименование: </label>
+                                        <input type="text" name="name" class="form-control" id="name" placeholder="Наименование" required
+                                            th:value="${placename != null ? placename.getName() : ''}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Выберите район: </label>
+                                        <select name="rayon" class="js-example-basic-single w-100 select2-hidden-accessible" tabindex="-1" aria-hidden="true" required>
+                                            <option th:each="rayon : ${rayons}"
+                                                    th:text="${rayon.getName()}"
+                                                    th:value="${rayon.getId()}"
+                                                    th:selected="${placename != null && placename.getRayon() != null ? placename.getRayon().getId()==rayon.getId() : null}"
+                                            ></option>
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
+                                    <button class="btn btn-light">Отмена</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <div th:include="fragments :: footer"></div>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- Plugin js for this page -->
+<script th:src="@{/adminStyles/vendors/typeahead.js/typeahead.bundle.min.js}"></script>
+<script th:src="@{/adminStyles/vendors/select2/select2.min.js}"></script>
+<!-- inject:js -->
+<script th:src="@{/adminStyles/js/off-canvas.js}"></script>
+<script th:src="@{/adminStyles/js/hoverable-collapse.js}"></script>
+<script th:src="@{/adminStyles/js/template.js}"></script>
+<script th:src="@{/adminStyles/js/settings.js}"></script>
+<script th:src="@{/adminStyles/js/todolist.js}"></script>
+<!-- endinject -->
+<script th:src="@{/adminStyles/js/file-upload.js}"></script>
+<script th:src="@{/adminStyles/js/typeahead.js}"></script>
+<script th:src="@{/adminStyles/js/select2.js}"></script>
+<script type="application/javascript">
+    $('#bodyRu').summernote();
+    $('#bodyKg').summernote();
+    $('#bodyEn').summernote();
+</script>
+<!-- End custom js for this page-->
+</body>
+
+</html>
+
