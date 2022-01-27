@@ -17,7 +17,7 @@ import javax.persistence.Id;
 @Entity
 public class UserRole extends Audit<String> {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     String name;

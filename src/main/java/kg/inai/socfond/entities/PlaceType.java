@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class PlaceType {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     String name;

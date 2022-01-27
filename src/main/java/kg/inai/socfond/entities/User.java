@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 public class User extends Audit<String> {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     String username;

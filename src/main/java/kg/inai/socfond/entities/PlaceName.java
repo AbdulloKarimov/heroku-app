@@ -14,7 +14,7 @@ import javax.persistence.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PlaceName {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     String name;
