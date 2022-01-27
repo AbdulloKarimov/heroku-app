@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TypeRodstva extends Audit<String>{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String name;
     String code;

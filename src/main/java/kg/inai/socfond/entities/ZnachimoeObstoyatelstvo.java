@@ -16,7 +16,7 @@ import javax.persistence.Id;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ZnachimoeObstoyatelstvo {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     String name;

@@ -18,7 +18,7 @@ import java.time.LocalDate;
 public class Szu extends Audit<String>{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @ManyToOne(cascade = {CascadeType.ALL})

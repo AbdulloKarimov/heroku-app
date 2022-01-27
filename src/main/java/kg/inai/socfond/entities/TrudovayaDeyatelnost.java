@@ -17,7 +17,7 @@ import javax.persistence.Id;
 public class TrudovayaDeyatelnost extends Audit<String> {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     String code;

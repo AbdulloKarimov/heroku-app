@@ -19,7 +19,7 @@ import java.time.LocalDate;
 public class SvedAboutIjdivenec extends Audit<String>{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Nullable

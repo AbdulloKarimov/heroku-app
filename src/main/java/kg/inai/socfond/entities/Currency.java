@@ -17,7 +17,7 @@ import javax.persistence.Id;
 public class Currency {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     String name;

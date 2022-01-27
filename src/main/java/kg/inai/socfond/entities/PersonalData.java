@@ -18,7 +18,7 @@ public class PersonalData extends Audit<String> {
 
     //персональные данные
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Column(columnDefinition = "TEXT")
